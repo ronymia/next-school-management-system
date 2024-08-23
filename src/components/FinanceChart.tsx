@@ -129,7 +129,12 @@ export default function FinanceChart() {
             stroke="#C3EBFA"
             strokeWidth={5}
           />
-          <Line type="monotone" dataKey="expense" stroke="#CFCEFF" />
+          <Line
+            type="monotone"
+            dataKey="expense"
+            stroke="#CFCEFF"
+            strokeWidth={5}
+          />
         </LineChart>
       </ResponsiveContainer>
 
