@@ -53,7 +53,6 @@ export default function CountChart() {
             data={data}
           >
             <RadialBar background dataKey="count" />
-            <Tooltip />
           </RadialBarChart>
         </ResponsiveContainer>
 
