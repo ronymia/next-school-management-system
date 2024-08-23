@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 :root {
+  skyBlue : #C3EBFA;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -14,3 +15,18 @@ body {
 
 }
 
+.react-calendar {
+  width: 100% !important;
+  border: none !important;
+  font-family: "Inter", sans-serif !important;
+}
+
+
+.react-calendar__navigation__label__labelText {
+  font-weight: 600 !important;
+}
+
+.react-calendar__tile--active {
+  background-color: #C3EBFA !important;
+  color: black !important;
+}
