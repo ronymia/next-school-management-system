@@ -6,7 +6,7 @@ import Table, { Column } from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
 import { studentsData } from "@/libs/data";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 type TStudent = {
   id: number;
@@ -21,7 +21,11 @@ type TStudent = {
 };
 
 export default function StudentListPage() {
-  // const router = useRouter();
+  const router = useRouter();
+
+  const handleView = (item) => {
+    router.push(`/list/teachers/${item.id}`);
+  };
 
   const handleEdit = (item: TStudent) => {
     console.log("Edit", item);
@@ -35,8 +39,8 @@ export default function StudentListPage() {
     () => [
       // INFO INCLUDES PHOTO, NAME, EMAIL
       {
-        header: "Info",
-        accessorKey: "info",
+        header: "User",
+        accessorKey: "user",
         getRenderCell: (_, item: TStudent) => (
           <div className="flex items-center gap-4 p-4">
             <Image
@@ -93,7 +97,7 @@ export default function StudentListPage() {
           {
             title: "View",
             icon: <Image src={"/view.png"} alt="edit" width={20} height={20} />,
-            handler: handleEdit,
+            handler: handleView,
             getVisibility: (item: TStudent) => true,
           },
           {
