@@ -43,7 +43,7 @@ export default function Table<T>({
               <th
                 key={index}
                 style={{ width: col?.width }}
-                className={col?.className}
+                className={` ${col?.className}`}
               >
                 {col?.header}
               </th>
@@ -63,20 +63,21 @@ export default function Table<T>({
             data.map((item) => (
               <tr
                 key={(item as any).id}
-                className={`border-b border-gray-200 text-sm ${
-                  columns.find((col) => col.rowClassName)?.rowClassName
-                    ? columns.find((col) => col.rowClassName)!.rowClassName!(
-                        item
-                      )
-                    : ""
-                }`}
+                className={`border-b border-gray-200 text-sm 
+                  ${
+                    columns.find((col) => col.rowClassName)?.rowClassName
+                      ? columns.find((col) => col.rowClassName)!.rowClassName!(
+                          item
+                        )
+                      : ""
+                  }`}
               >
                 {/*  */}
                 {columns.map((col, index) => (
                   <td
                     key={index}
                     style={{ width: col?.width }}
-                    className={col?.className}
+                    className={`last:flex last:gap-3 last:justify-end ${col?.className}`}
                   >
                     {col?.getRenderCell
                       ? col?.getRenderCell(
@@ -86,20 +87,10 @@ export default function Table<T>({
                       : col?.accessorKey
                       ? (item[col?.accessorKey] as ReactNode)
                       : null}
-                  </td>
-                ))}
 
-                {/* Render actions in the last cell */}
-                {/* Render actions in the last cell */}
-                {actionColumn && (
-                  <td
-                    // style={{ width: col?.width }}
-                    className={actionColumn?.className}
-                  >
-                    <div className="flex gap-2">
-                      {actionColumn.actions?.map((action, index) =>
-                        action?.getVisibility ? (
-                          action?.getVisibility(item) && (
+                    {col.actions?.map((action, index) =>
+                      action?.getVisibility
+                        ? action?.getVisibility(item) && (
                             <button
                               key={index}
                               onClick={() => action?.handler(item)}
@@ -117,20 +108,10 @@ export default function Table<T>({
                               {action?.icon}
                             </button>
                           )
-                        ) : (
-                          <button
-                            key={index}
-                            onClick={() => action?.handler(item)}
-                            title={action?.title}
-                            className="text-blue-500"
-                          >
-                            {action?.icon}
-                          </button>
-                        )
-                      )}
-                    </div>
+                        : null
+                    )}
                   </td>
-                )}
+                ))}
               </tr>
             ))
           )}

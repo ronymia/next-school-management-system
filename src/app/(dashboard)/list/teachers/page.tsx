@@ -7,6 +7,7 @@ import TableSearch from "@/components/TableSearch";
 import { teachersData } from "@/libs/data";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 type TTeacher = {
   id: number;
@@ -21,8 +22,11 @@ type TTeacher = {
 };
 
 export default function TeacherListPage() {
-  // const router = useRouter();
+  const router = useRouter();
 
+  const handleView = (item) => {
+    router.push(`/list/teachers/${item.id}`);
+  };
   const handleEdit = (item: TTeacher) => {
     console.log("Edit", item);
   };
@@ -92,8 +96,8 @@ export default function TeacherListPage() {
         actions: [
           {
             title: "View",
-            icon: <Image src={"/view.png"} alt="edit" width={20} height={20} />,
-            handler: handleEdit,
+            icon: <Image src={"/view.png"} alt="view" width={20} height={20} />,
+            handler: handleView,
             getVisibility: (item: TTeacher) => true,
           },
           {
