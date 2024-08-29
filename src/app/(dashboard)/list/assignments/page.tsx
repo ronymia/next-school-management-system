@@ -4,103 +4,72 @@ import React, { useMemo } from "react";
 import Pagination from "@/components/Pagination";
 import Table, { Column } from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
-import { teachersData } from "@/libs/data";
+import { assignmentsData } from "@/libs/data";
 import Image from "next/image";
-import Link from "next/link";
 
-type TTeacher = {
+type TAssignment = {
   id: number;
-  teacherId: string;
-  name: string;
-  email: string;
-  photo: string;
-  phone: string;
-  subjects: string[];
-  classes: string[];
-  address: string;
+  subject: string;
+  class: string;
+  teacher: string;
+  dueDate: string;
 };
 
-export default function TeacherListPage() {
+export default function AssignmentListPage() {
   // const router = useRouter();
 
-  const handleEdit = (item: TTeacher) => {
+  const handleEdit = (item: TAssignment) => {
     console.log("Edit", item);
   };
 
-  const handleDelete = (item: TTeacher) => {
+  const handleDelete = (item: TAssignment) => {
     console.log("Delete", item);
   };
 
-  const columns: Column<TTeacher>[] = useMemo(
+  const columns: Column<TAssignment>[] = useMemo(
     () => [
-      // INFO INCLUDES PHOTO, NAME, EMAIL
+      // subject
       {
-        header: "Info",
-        accessorKey: "info",
-        getRenderCell: (_, item: TTeacher) => (
-          <div className="flex items-center gap-4 p-4">
-            <Image
-              src={item.photo}
-              alt={item.name}
-              width={40}
-              height={40}
-              className="rounded-full"
-            />
-            <div className="flex flex-col">
-              <h3 className="font-semibold">{item.name}</h3>
-              <p className="text-xs text-gray-500">{item.email}</p>
-            </div>
-          </div>
-        ),
+        header: "Subject",
+        accessorKey: "subject",
+        className: "table-cell",
       },
-      // TEACHER ID
+      // class
       {
-        header: "Teacher ID",
-        accessorKey: "teacherId",
-        className: "hidden md:table-cell",
+        header: "Class",
+        accessorKey: "class",
+        className: "table-cell",
       },
-      // SUBJECTS
+      // teacher
       {
-        header: "Subjects",
-        accessorKey: "subjects",
-        className: "hidden md:table-cell",
-        getRenderCell: (_, item: TTeacher) => item?.subjects?.join(", "),
+        header: "Teacher",
+        accessorKey: "teacher",
+        className: "table-cell",
       },
-      // CLASSES
+      // dueDate
       {
-        header: "Classes",
-        accessorKey: "classes",
-        className: "hidden md:table-cell",
-        getRenderCell: (_, item: TTeacher) => item?.classes?.join(","),
+        header: "Due Date",
+        accessorKey: "dueDate",
+        className: "table-cell",
       },
-      // PHONE
-      {
-        header: "Phone",
-        accessorKey: "phone",
-        className: "hidden lg:table-cell",
-      },
-      // ADDRESS
-      {
-        header: "Address",
-        accessorKey: "address",
-        className: "hidden lg:table-cell",
-      },
+
       // ACTIONS
       {
         header: "Action",
         accessorKey: "action",
+        className: "text-center",
         actions: [
           {
             title: "View",
             icon: <Image src={"/view.png"} alt="edit" width={20} height={20} />,
             handler: handleEdit,
-            getVisibility: (item: TTeacher) => true,
+            getVisibility: (item: TAssignment) => true,
           },
           {
             title: "Edit",
             icon: <Image src={"/edit.png"} alt="edit" width={20} height={20} />,
             handler: handleEdit,
-            getVisibility: (item: TTeacher) => true,
+            getVisibility: (item: TAssignment) => true,
           },
           {
             title: "Delete",
@@ -108,7 +77,7 @@ export default function TeacherListPage() {
               <Image src={"/delete.png"} alt="delete" width={20} height={20} />
             ),
             handler: handleDelete,
-            getVisibility: (item: TTeacher) => true,
+            getVisibility: (item: TAssignment) => true,
           },
         ],
       },
@@ -151,7 +120,7 @@ export default function TeacherListPage() {
       </div>
 
       {/*TABLE LIST */}
-      <Table columns={columns} data={teachersData} />
+      <Table columns={columns} data={assignmentsData} />
       {/* PAGINATION */}
       <Pagination />
     </section>

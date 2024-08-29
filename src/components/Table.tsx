@@ -104,7 +104,15 @@ export default function Table<T>({
                               key={index}
                               onClick={() => action?.handler(item)}
                               title={action?.title}
-                              className="text-blue-500"
+                              className={`w-7 h-7 flex items-center justify-center rounded-full bg-gray-100 
+                                ${action?.title === "View" ? "bg-sky" : " "}
+                                ${action?.title === "Edit" ? "bg-yellow" : " "}
+                                ${
+                                  action?.title === "Delete"
+                                    ? "text-purple"
+                                    : " "
+                                }
+                                `}
                             >
                               {action?.icon}
                             </button>

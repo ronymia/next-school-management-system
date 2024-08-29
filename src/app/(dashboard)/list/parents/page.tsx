@@ -77,6 +77,12 @@ export default function ParentListPage() {
         accessorKey: "action",
         actions: [
           {
+            title: "View",
+            icon: <Image src={"/view.png"} alt="edit" width={20} height={20} />,
+            handler: handleEdit,
+            getVisibility: (item: TParent) => true,
+          },
+          {
             title: "Edit",
             icon: <Image src={"/edit.png"} alt="edit" width={20} height={20} />,
             handler: handleEdit,
