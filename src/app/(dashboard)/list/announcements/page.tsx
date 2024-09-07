@@ -6,6 +6,7 @@ import Table, { Column } from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
 import { announcementsData } from "@/libs/data";
 import Image from "next/image";
+import FormModal from "@/components/modals/FormModal";
 
 type TAnnouncement = {
   id: number;
@@ -57,12 +58,18 @@ export default function AnnouncementListPage() {
             icon: <Image src={"/view.png"} alt="edit" width={20} height={20} />,
             handler: handleEdit,
             getVisibility: (item: TAnnouncement) => true,
+            getRenderCell: (item: TAnnouncement) => (
+              <FormModal table="announcement" type="view" data={item} />
+            ),
           },
           {
             title: "Edit",
             icon: <Image src={"/edit.png"} alt="edit" width={20} height={20} />,
             handler: handleEdit,
             getVisibility: (item: TAnnouncement) => true,
+            getRenderCell: (item: TAnnouncement) => (
+              <FormModal table="announcement" type="update" data={item} />
+            ),
           },
           {
             title: "Delete",
@@ -71,6 +78,9 @@ export default function AnnouncementListPage() {
             ),
             handler: handleDelete,
             getVisibility: (item: TAnnouncement) => true,
+            getRenderCell: (item: TAnnouncement) => (
+              <FormModal table="announcement" type="delete" id={item?.id} />
+            ),
           },
         ],
       },

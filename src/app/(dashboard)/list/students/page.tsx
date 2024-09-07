@@ -7,6 +7,7 @@ import TableSearch from "@/components/TableSearch";
 import { studentsData } from "@/libs/data";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import FormModal from "@/components/modals/FormModal";
 
 type TStudent = {
   id: number;
@@ -99,12 +100,18 @@ export default function StudentListPage() {
             icon: <Image src={"/view.png"} alt="edit" width={20} height={20} />,
             handler: handleView,
             getVisibility: (item: TStudent) => true,
+            getRenderCell: (item: TStudent) => (
+              <FormModal table="student" type="view" data={item} />
+            ),
           },
           {
             title: "Edit",
             icon: <Image src={"/edit.png"} alt="edit" width={20} height={20} />,
             handler: handleEdit,
             getVisibility: (item: TStudent) => true,
+            getRenderCell: (item: TStudent) => (
+              <FormModal table="student" type="update" data={item} />
+            ),
           },
           {
             title: "Delete",
@@ -113,6 +120,9 @@ export default function StudentListPage() {
             ),
             handler: handleDelete,
             getVisibility: (item: TStudent) => true,
+            getRenderCell: (item: TStudent) => (
+              <FormModal table="student" type="delete" id={item.id} />
+            ),
           },
         ],
       },
@@ -124,7 +134,7 @@ export default function StudentListPage() {
     <section className="flex-1 bg-white  rounded-md p-4 m-4 mt-0">
       {/* TOP */}
       <div className="flex items-center justify-between">
-        <h1 className="hidden md:block text-lg font-semibold">Teachers</h1>
+        <h1 className="hidden md:block text-lg font-semibold">Students</h1>
 
         <div className="flex flex-col md:flex-row text-lg gap-4 w-full md:w-auto">
           {/* TABLE SEARCH */}
@@ -144,12 +154,8 @@ export default function StudentListPage() {
             >
               <Image src={"/sort.png"} alt="filter" width={14} height={14} />
             </button>
-            <button
-              type="button"
-              className="w-8 h-8 flex items-center justify-center rounded-full bg-yellow"
-            >
-              <Image src={"/plus.png"} alt="filter" width={14} height={14} />
-            </button>
+            {/* Create Button */}
+            <FormModal table="student" type="create" />
           </div>
         </div>
       </div>

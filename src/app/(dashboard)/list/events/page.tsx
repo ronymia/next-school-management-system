@@ -6,6 +6,7 @@ import Table, { Column } from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
 import { eventsData } from "@/libs/data";
 import Image from "next/image";
+import FormModal from "@/components/modals/FormModal";
 
 type TEvent = {
   id: number;
@@ -71,12 +72,19 @@ export default function EventListPage() {
             icon: <Image src={"/view.png"} alt="edit" width={20} height={20} />,
             handler: handleEdit,
             getVisibility: (item: TEvent) => true,
+
+            getRenderCell: (item: TEvent) => (
+              <FormModal table="event" type="view" data={item} />
+            ),
           },
           {
             title: "Edit",
             icon: <Image src={"/edit.png"} alt="edit" width={20} height={20} />,
             handler: handleEdit,
             getVisibility: (item: TEvent) => true,
+            getRenderCell: (item: TEvent) => (
+              <FormModal table="event" type="update" data={item} />
+            ),
           },
           {
             title: "Delete",
@@ -85,6 +93,9 @@ export default function EventListPage() {
             ),
             handler: handleDelete,
             getVisibility: (item: TEvent) => true,
+            getRenderCell: (item: TEvent) => (
+              <FormModal table="event" type="delete" id={item.id} />
+            ),
           },
         ],
       },
@@ -116,12 +127,7 @@ export default function EventListPage() {
             >
               <Image src={"/sort.png"} alt="filter" width={14} height={14} />
             </button>
-            <button
-              type="button"
-              className="w-8 h-8 flex items-center justify-center rounded-full bg-yellow"
-            >
-              <Image src={"/plus.png"} alt="filter" width={14} height={14} />
-            </button>
+            <FormModal table="event" type="create" />
           </div>
         </div>
       </div>

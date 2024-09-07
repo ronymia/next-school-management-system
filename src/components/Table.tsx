@@ -6,6 +6,7 @@ export interface Action<T> {
   icon: ReactNode;
   handler: (item: T) => void;
   getVisibility?: (item: T) => boolean; // A function to determine if the action should be visible
+  getRenderCell?: (item: T) => ReactNode;
 }
 
 export interface Column<T> {
@@ -77,7 +78,7 @@ export default function Table<T>({
                   <td
                     key={index}
                     style={{ width: col?.width }}
-                    className={`last:flex last:gap-3 last:justify-end ${col?.className}`}
+                    className={`last:flex last:gap-3 last:justify-center last:items-center ${col?.className}`}
                   >
                     {col?.getRenderCell
                       ? col?.getRenderCell(
@@ -88,27 +89,15 @@ export default function Table<T>({
                       ? (item[col?.accessorKey] as ReactNode)
                       : null}
 
-                    {col.actions?.map((action, index) =>
-                      action?.getVisibility
-                        ? action?.getVisibility(item) && (
-                            <button
-                              key={index}
-                              onClick={() => action?.handler(item)}
-                              title={action?.title}
-                              className={`w-7 h-7 flex items-center justify-center rounded-full bg-gray-100 
-                                ${action?.title === "View" ? "bg-sky" : " "}
-                                ${action?.title === "Edit" ? "bg-yellow" : " "}
-                                ${
-                                  action?.title === "Delete"
-                                    ? "text-purple"
-                                    : " "
-                                }
-                                `}
-                            >
-                              {action?.icon}
-                            </button>
-                          )
-                        : null
+                    {col.actions?.map(
+                      (action, index) =>
+                        action?.getVisibility?.(item) && (
+                          <div key={index}>
+                            {action?.getRenderCell
+                              ? action.getRenderCell(item)
+                              : null}
+                          </div>
+                        )
                     )}
                   </td>
                 ))}

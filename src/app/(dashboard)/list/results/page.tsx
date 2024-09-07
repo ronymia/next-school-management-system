@@ -6,6 +6,7 @@ import Table, { Column } from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
 import { resultsData } from "@/libs/data";
 import Image from "next/image";
+import FormModal from "@/components/modals/FormModal";
 
 type TExam = {
   id: number;
@@ -85,12 +86,18 @@ export default function ResultListPage() {
             icon: <Image src={"/view.png"} alt="edit" width={20} height={20} />,
             handler: handleEdit,
             getVisibility: (item: TExam) => true,
+            getRenderCell: (item: TExam) => (
+              <FormModal table="exam" type="view" data={item} />
+            ),
           },
           {
             title: "Edit",
             icon: <Image src={"/edit.png"} alt="edit" width={20} height={20} />,
             handler: handleEdit,
             getVisibility: (item: TExam) => true,
+            getRenderCell: (item: TExam) => (
+              <FormModal table="exam" type="update" data={item} />
+            ),
           },
           {
             title: "Delete",
@@ -99,6 +106,9 @@ export default function ResultListPage() {
             ),
             handler: handleDelete,
             getVisibility: (item: TExam) => true,
+            getRenderCell: (item: TExam) => (
+              <FormModal table="exam" type="delete" id={item.id} />
+            ),
           },
         ],
       },
@@ -130,12 +140,7 @@ export default function ResultListPage() {
             >
               <Image src={"/sort.png"} alt="filter" width={14} height={14} />
             </button>
-            <button
-              type="button"
-              className="w-8 h-8 flex items-center justify-center rounded-full bg-yellow"
-            >
-              <Image src={"/plus.png"} alt="filter" width={14} height={14} />
-            </button>
+            <FormModal table="result" type="create" />
           </div>
         </div>
       </div>
