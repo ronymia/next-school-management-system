@@ -34,37 +34,36 @@ export default function Table<T>({
   const actionColumn = columns.find((col) => col.actions);
 
   return (
-    <div className="relative w-full mt-4">
-      <table className="w-full">
-        {/* TABLE HEADER */}
-        <thead>
-          <tr className="text-left text-gray-500 text-sm">
-            {/*  */}
-            {columns.map((col, index) => (
-              <th
-                key={index}
-                style={{ width: col?.width }}
-                className={` ${col?.className}`}
-              >
-                {col?.header}
-              </th>
-            ))}
-          </tr>
-        </thead>
+    <table className="w-full">
+      {/* TABLE HEADER */}
+      <thead>
+        <tr className="text-left text-gray-500 text-sm">
+          {/*  */}
+          {columns.map((col, index) => (
+            <th
+              key={index}
+              style={{ width: col?.width }}
+              className={` ${col?.className}`}
+            >
+              {col?.header}
+            </th>
+          ))}
+        </tr>
+      </thead>
 
-        {/* TABLE BODY */}
-        <tbody>
-          {isPending ? (
-            <tr>
-              <td colSpan={columns.length} className="text-center py-4">
-                <span className="text-gray-500">Loading...</span>
-              </td>
-            </tr>
-          ) : (
-            data.map((item) => (
-              <tr
-                key={(item as any).id}
-                className={`border-b border-gray-200 text-sm 
+      {/* TABLE BODY */}
+      <tbody>
+        {isPending ? (
+          <tr>
+            <td colSpan={columns.length} className="text-center py-4">
+              <span className="text-gray-500">Loading...</span>
+            </td>
+          </tr>
+        ) : (
+          data.map((item) => (
+            <tr
+              key={(item as any).id}
+              className={`border-b border-gray-200 text-sm 
                   ${
                     columns.find((col) => col.rowClassName)?.rowClassName
                       ? columns.find((col) => col.rowClassName)!.rowClassName!(
@@ -72,40 +71,39 @@ export default function Table<T>({
                         )
                       : ""
                   }`}
-              >
-                {/*  */}
-                {columns.map((col, index) => (
-                  <td
-                    key={index}
-                    style={{ width: col?.width }}
-                    className={`last:flex last:gap-3 last:justify-center last:items-center ${col?.className}`}
-                  >
-                    {col?.getRenderCell
-                      ? col?.getRenderCell(
-                          item[col?.accessorKey as keyof T],
-                          item
-                        )
-                      : col?.accessorKey
-                      ? (item[col?.accessorKey] as ReactNode)
-                      : null}
+            >
+              {/*  */}
+              {columns.map((col, index) => (
+                <td
+                  key={index}
+                  style={{ width: col?.width }}
+                  className={`last:flex last:gap-3 last:justify-center last:items-center ${col?.className}`}
+                >
+                  {col?.getRenderCell
+                    ? col?.getRenderCell(
+                        item[col?.accessorKey as keyof T],
+                        item
+                      )
+                    : col?.accessorKey
+                    ? (item[col?.accessorKey] as ReactNode)
+                    : null}
 
-                    {col.actions?.map(
-                      (action, index) =>
-                        action?.getVisibility?.(item) && (
-                          <div key={index}>
-                            {action?.getRenderCell
-                              ? action.getRenderCell(item)
-                              : null}
-                          </div>
-                        )
-                    )}
-                  </td>
-                ))}
-              </tr>
-            ))
-          )}
-        </tbody>
-      </table>
-    </div>
+                  {col.actions?.map(
+                    (action, index) =>
+                      action?.getVisibility?.(item) && (
+                        <div key={index}>
+                          {action?.getRenderCell
+                            ? action.getRenderCell(item)
+                            : null}
+                        </div>
+                      )
+                  )}
+                </td>
+              ))}
+            </tr>
+          ))
+        )}
+      </tbody>
+    </table>
   );
 }

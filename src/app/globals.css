@@ -2,16 +2,53 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  skyblue: #c3ebfa;
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+/* Hide the spinner controls in WebKit browsers */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Hide the spinner controls in Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
+    /* For rgb(255 115 179 / <alpha-value>) */
+    --color-primary: 255 115 179;
+
+    /* For hsl(198deg 93% 60% / <alpha-value>) */
+    --color-primary: 198deg 93% 60%;
+
+    /* For rgba(255, 115, 179, <alpha-value>) */
+    --color-primary: 255, 115, 179;
   }
 }
 
-body {
+@layer components {
+  .btn {
+    @apply flex gap-2 items-center justify-center font-semibold py-2 px-4 shadow rounded-md;
+  }
+
+  .btn.btn-light {
+    @apply bg-white text-gray-500;
+  }
+  .btn.btn-success {
+    @apply text-white bg-green-600 shadow-green-400/40;
+  }
+
+  .btn.btn-info {
+    @apply text-white bg-blue-600 shadow-blue-400/40;
+  }
+
+  .btn.btn-danger {
+    @apply text-white bg-red-600 shadow-red-400/40;
+  }
 }
 
 /*  React Calendar custom styles */
